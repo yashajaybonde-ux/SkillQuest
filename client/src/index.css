@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Theme tokens. Light is the default; the "dark" class on <html> switches them. ===== */
+:root {
+  --fg: 13 59 44;
+  --ink-950: 244 251 247;
+  --ink-900: 255 255 255;
+  --ink-800: 255 255 255;
+  --ink-700: 232 245 238;
+  --ink-600: 207 230 217;
+  --ink-500: 169 207 186;
+  --slate-100: 20 61 47;
+  --slate-200: 31 74 59;
+  --slate-300: 47 84 70;
+  --slate-400: 88 122 107;
+  --slate-500: 124 154 140;
+  --slate-600: 157 181 168;
+  --violet-200: 4 120 87;
+  --violet-300: 4 120 87;
+  --violet-400: 16 185 129;
+  --violet-500: 16 185 129;
+  --violet-600: 5 150 105;
+  --violet-700: 4 120 87;
+  --blue-300: 15 118 110;
+  --blue-400: 20 184 166;
+  --blue-500: 20 184 166;
+  --blue-600: 13 148 136;
+  --cyan-300: 77 124 15;
+  --cyan-400: 132 204 22;
+  --cyan-500: 132 204 22;
+  --emerald-300: 4 120 87;
+  --emerald-400: 52 211 153;
+  --amber-300: 180 83 9;
+  --amber-400: 245 158 11;
+  --red-300: 185 28 28;
+  --red-400: 239 68 68;
+  --sky-300: 3 105 161;
+  --sky-400: 56 189 248;
+  --fuchsia-300: 162 28 175;
+  --fuchsia-400: 217 70 239;
+  --orange-300: 194 65 12;
+  color-scheme: light;
+  --glass-bg: rgb(255 255 255 / .55);
+  --glass-bg-hover: rgb(255 255 255 / .75);
+  --glass-border: rgb(255 255 255 / .8);
+  --glass-shadow: 0 8px 32px -14px rgba(16, 94, 66, .22), inset 0 1px 0 rgba(255, 255, 255, .95);
+  --glass-shadow-hover: 0 22px 48px -18px rgba(16, 185, 129, .5), inset 0 1px 0 #fff;
+  --ghost-bg: rgb(255 255 255 / .6); --ghost-bg-hover: rgb(255 255 255 / .9); --ghost-border: #a7f3d0; --ghost-fg: #064e3b;
+  --input-bg: rgb(255 255 255 / .7); --input-bg-focus: #ffffff; --input-border: rgb(167 243 208 / .8);
+  --page-from: #ffffff; --page-mid: #f1faf4; --page-to: #e3f5ea; --blob-opacity: 1;
+  --danger-fg: #dc2626;
+}
+.dark {
+  --fg: 231 247 238;
+  --ink-950: 6 17 12;
+  --ink-900: 10 26 19;
+  --ink-800: 15 36 25;
+  --ink-700: 21 48 35;
+  --ink-600: 31 69 53;
+  --ink-500: 46 98 73;
+  --slate-100: 227 245 234;
+  --slate-200: 207 232 218;
+  --slate-300: 180 210 194;
+  --slate-400: 143 177 160;
+  --slate-500: 111 148 130;
+  --slate-600: 77 111 93;
+  --violet-200: 110 231 183;
+  --violet-300: 110 231 183;
+  --violet-400: 52 211 153;
+  --violet-500: 16 185 129;
+  --violet-600: 5 150 105;
+  --violet-700: 4 120 87;
+  --blue-300: 94 234 212;
+  --blue-400: 45 212 191;
+  --blue-500: 20 184 166;
+  --blue-600: 13 148 136;
+  --cyan-300: 190 242 100;
+  --cyan-400: 163 230 53;
+  --cyan-500: 132 204 22;
+  --emerald-300: 110 231 183;
+  --emerald-400: 52 211 153;
+  --amber-300: 252 211 77;
+  --amber-400: 251 191 36;
+  --red-300: 252 165 165;
+  --red-400: 248 113 113;
+  --sky-300: 125 211 252;
+  --sky-400: 56 189 248;
+  --fuchsia-300: 240 171 252;
+  --fuchsia-400: 232 121 249;
+  --orange-300: 253 186 116;
+  color-scheme: dark;
+  --glass-bg: rgb(15 36 25 / .55);
+  --glass-bg-hover: rgb(21 48 35 / .7);
+  --glass-border: rgb(255 255 255 / .08);
+  --glass-shadow: 0 10px 36px -14px rgba(0, 0, 0, .65), inset 0 1px 0 rgba(255, 255, 255, .07);
+  --glass-shadow-hover: 0 22px 48px -18px rgba(16, 185, 129, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
+  --ghost-bg: rgb(255 255 255 / .05); --ghost-bg-hover: rgb(255 255 255 / .1); --ghost-border: rgb(52 211 153 / .35); --ghost-fg: #a7f3d0;
+  --input-bg: rgb(255 255 255 / .06); --input-bg-focus: rgb(255 255 255 / .1); --input-border: rgb(52 211 153 / .25);
+  --page-from: #06110c; --page-mid: #08160f; --page-to: #0b1f16; --blob-opacity: .5;
+  --danger-fg: #fca5a5;
+}
+
+html { scroll-behavior: smooth; }
+body { @apply font-sans antialiased text-slate-300; background: rgb(var(--ink-950)); }
+::selection { background: rgba(16, 185, 129, .3); }
+
+/* Soft base gradient, plus slowly drifting green light behind the glass */
+body::before { content: ''; position: fixed; inset: 0; z-index: -2; background: linear-gradient(160deg, var(--page-from) 0%, var(--page-mid) 45%, var(--page-to) 100%); }
+body::after {
+  content: ''; position: fixed; inset: -20%; z-index: -1; pointer-events: none; filter: blur(24px); opacity: var(--blob-opacity);
+  background:
+    radial-gradient(34rem 34rem at 18% 22%, rgba(52, 211, 153, .34), transparent 62%),
+    radial-gradient(30rem 30rem at 82% 28%, rgba(163, 230, 53, .26), transparent 62%),
+    radial-gradient(38rem 38rem at 50% 92%, rgba(45, 212, 191, .26), transparent 62%);
+  animation: drift 26s ease-in-out infinite alternate;
+}
+@keyframes drift { to { transform: translate3d(4%, -3%, 0) scale(1.1) rotate(3deg); } }
+
+h1, h2, h3 { @apply font-display tracking-tight; color: rgb(var(--fg)); }
+:focus-visible { outline: 2px solid #10b981; outline-offset: 2px; border-radius: 6px; }
+
+/* Every page fades up when it mounts, so navigation feels smooth */
+main > * { animation: pageIn .55s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* Brief cross-fade while switching light/dark */
+html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after { transition: background-color .4s ease, border-color .4s ease, color .4s ease, box-shadow .4s ease !important; }
+
+@layer components {
+  .panel {
+    @apply relative rounded-2xl backdrop-blur-xl;
+    border: 1px solid var(--glass-border); background-color: var(--glass-bg); box-shadow: var(--glass-shadow);
+    transition: transform .35s cubic-bezier(.2, .8, .2, 1), box-shadow .35s ease, border-color .35s ease, background-color .35s ease;
+  }
+  .panel::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .35s ease;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(52, 211, 153, .22), transparent 70%);
+  }
+  .panel:hover::before { opacity: 1; }
+  .panel-hover:hover { transform: translateY(-4px); border-color: rgba(16, 185, 129, .5); background-color: var(--glass-bg-hover); box-shadow: var(--glass-shadow-hover); }
+
+  .btn { @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-2.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50; transition: transform .2s ease, box-shadow .25s ease, background-color .25s ease, border-color .25s ease; }
+  .btn:not(:disabled):hover { transform: translateY(-1px); }
+  .btn:not(:disabled):active { transform: translateY(0) scale(.97); }
+  .btn-primary { @apply btn bg-gradient-to-r from-emerald-500 to-teal-500 text-white; box-shadow: 0 10px 24px -10px rgba(16, 185, 129, .8); }
+  .btn-primary:not(:disabled):hover { box-shadow: 0 14px 30px -10px rgba(16, 185, 129, .9); }
+  .btn-primary::after { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .45) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s ease; }
+  .btn-primary:not(:disabled):hover::after { transform: translateX(120%); }
+  .btn-ghost { @apply btn backdrop-blur hover:border-emerald-400; border: 1px solid var(--ghost-border); background-color: var(--ghost-bg); color: var(--ghost-fg); }
+  .btn-ghost:hover { background-color: var(--ghost-bg-hover); }
+  .btn-danger { @apply btn border border-red-400/50 hover:bg-red-500/10; color: var(--danger-fg); background-color: var(--ghost-bg); }
+
+  .input { @apply w-full rounded-xl px-3.5 py-2.5 text-sm placeholder:text-slate-500 backdrop-blur focus:border-emerald-400 focus:outline-none focus:ring-4 focus:ring-emerald-400/20; border: 1px solid var(--input-border); background-color: var(--input-bg); color: rgb(var(--fg)); transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
+  .input:focus { background-color: var(--input-bg-focus); }
+  .label { @apply mb-1.5 block text-sm font-medium text-slate-200; }
+  .pill { @apply inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium backdrop-blur; }
+}
+a, button { transition: color .2s ease, background-color .2s ease, border-color .2s ease, opacity .2s ease; }
+
+/* Dark-mode fixes for a few fixed-colour utilities used in pages */
+.dark .bg-white\/60 { background-color: rgb(255 255 255 / .06); }
+.dark .text-emerald-800 { color: #6ee7b7; }
+.dark .border-emerald-300\/60 { border-color: rgb(52 211 153 / .35); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+.skeleton { background: linear-gradient(90deg, rgba(16, 185, 129, .08), rgba(16, 185, 129, .2), rgba(16, 185, 129, .08)); background-size: 200% 100%; animation: sheen 1.4s linear infinite; }
+@keyframes sheen { to { background-position: -200% 0; } }

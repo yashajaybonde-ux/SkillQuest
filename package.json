@@ -1,0 +1,15 @@
+{
+  "name": "skillquest",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SkillQuest - Blockchain Achievement Passport",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix contracts && npm install --prefix server && npm install --prefix client",
+    "chain": "npm run node --prefix contracts",
+    "deploy:local": "npm run deploy:local --prefix contracts",
+    "seed": "npm run seed --prefix server",
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "test": "npm test --prefix contracts && npm test --prefix server"
+  },
+  "devDependencies": { "concurrently": "^8.2.2" }
+}
