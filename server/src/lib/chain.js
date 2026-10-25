@@ -22,15 +22,28 @@ function setup(needWriter) {
   }
 }
 
+const NOT_DEPLOYED = 'The smart contract is not deployed on this blockchain. Run "npm run deploy:local", then restart the server. (The local chain forgets everything whenever it restarts.)';
+
 const chainDown = (e) => {
   console.error('Blockchain error:', e?.shortMessage || e?.message || e);
+  // The chain answered but there is no contract at our address: the node restarted and lost it.
+  if (e?.code === 'BAD_DATA') return new HttpError(503, NOT_DEPLOYED);
   return new HttpError(502, 'Could not reach the blockchain network. Is your Hardhat node (npm run chain) or RPC provider running?');
 };
+
+// A transaction sent to an address with no contract "succeeds" without recording anything.
+// Always check first, so a certificate is never marked issued when nothing reached the chain.
+async function assertDeployed() {
+  let code;
+  try { code = await provider.getCode(config.chain.address); } catch (e) { throw chainDown(e); }
+  if (code === '0x') throw new HttpError(503, NOT_DEPLOYED);
+}
 
 let queue = Promise.resolve(); // serialise transactions from the single issuer wallet
 export function issueOnChain(publicId, recipient, credentialHash) {
   const job = queue.then(async () => {
     setup(true);
+    await assertDeployed();
     try {
       const tx = await writeC.issueCertificate(certKey(publicId), recipient, credentialHash);
       const receipt = await tx.wait();
@@ -46,6 +59,7 @@ export function issueOnChain(publicId, recipient, credentialHash) {
 
 export async function revokeOnChain(publicId) {
   setup(true);
+  await assertDeployed();
   try {
     const tx = await writeC.revokeCertificate(certKey(publicId));
     await tx.wait();
@@ -55,6 +69,7 @@ export async function revokeOnChain(publicId) {
 
 export async function getOnChain(publicId) {
   setup(false);
+  await assertDeployed();
   try {
     const c = await readC.getCertificate(certKey(publicId));
     if (c.issuedAt === 0n) return null;

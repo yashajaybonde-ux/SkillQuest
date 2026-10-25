@@ -33,7 +33,7 @@ export default function Dashboard() {
       {weekly && (
         <Link to={`/quests/${weekly.slug}`} className="panel panel-hover mb-6 flex flex-wrap items-center gap-4 !border-amber-400/50 p-5">
           <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-400 to-cyan-400 text-white"><Crown className="h-6 w-6" /></div>
-          <div className="min-w-0 flex-1"><p className="text-sm font-semibold text-amber-300">Weekly challenge · double XP · {timeLeft(weekly.endsAt)}</p><h2 className="truncate text-xl font-extrabold">{weekly.title}</h2></div>
+          <div className="min-w-[14rem] flex-1"><p className="text-sm font-semibold text-amber-300">Weekly challenge · double XP · {timeLeft(weekly.endsAt)}</p><h2 className="text-xl font-extrabold sm:truncate">{weekly.title}</h2></div>
           {weekly.completed ? <span className="flex items-center gap-1.5 font-semibold text-emerald-300"><CheckCircle2 className="h-5 w-5" />Completed</span> : <span className="flex items-center gap-1 text-lg font-extrabold text-violet-300"><Zap className="h-5 w-5" />+{weekly.xp} XP</span>}
         </Link>
       )}
